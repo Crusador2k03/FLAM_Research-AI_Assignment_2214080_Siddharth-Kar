@@ -1,68 +1,84 @@
-This repository contains a lightweight Python script to fit a parametric 2-D curve to a cloud of (x,y) points by projecting each point onto a moving coordinate t (along a line defined by angle θ and offset X) and modelling the perpendicular coordinate s with a damped sinusoid:
+# 📈 Parametric Curve Fitting
 
-s(t) = exp(M * t) * sin(0.3 t)
+This repository contains a Python implementation for fitting a **damped sinusoidal parametric curve** to a set of 2-D data points `(x, y)`.  
+It estimates the optimal orientation `θ`, horizontal offset `X`, and exponential coefficient `M` by minimizing the perpendicular mean-squared error between model predictions and observed data.
 
-The script finds the best line orientation θ and offset X (outer optimization) while fitting the single amplitude/decay parameter M (inner optimization). It supports both SciPy-based optimization (fast, continuous) and a fallback grid-search when SciPy is not available.
+---
 
-Key features
+## ⚙️ Model Overview
 
-Projects observed (x,y) into along-track t and cross-track s.
+The fitted curve is expressed as:
 
-Fits s(t) to exp(M t) * sin(0.3 t) (optimizes M) for a given (θ, X).
+\[
+(x, y) =
+\left(
+X + t\cos(\theta) - e^{M|t|}\sin(0.3t)\sin(\theta),\;
+42 + t\sin(\theta) + e^{M|t|}\sin(0.3t)\cos(\theta)
+\right)
+\]
 
-Outer optimization over θ and X using scipy.optimize.minimize (L-BFGS-B) or a robust grid search fallback.
+where:
 
-PRODUCES:
+- `θ` → orientation angle (radians or degrees)  
+- `X` → x-axis offset (translation)  
+- `M` → exponential growth/decay coefficient  
 
-fitted parameters (theta in radians & degrees, X, M),
+---
 
-final perpendicular MSE for the s model,
+## 🧮 Fitted Equation (Radians)
 
-mean L1 and L2 errors between observed and predicted (x,y),
+<p align="center">
+  <img src="images/Screenshot_2025-11-10_221323.png" alt="Equation in radians" width="750">
+</p>
 
-LaTeX expressions for the fitted parametric curve,
+---
 
-fit_summary.csv with the summary of fitted values,
+## 📊 Model Fitting Results
 
-a diagnostic plot (if matplotlib is available).
+<p align="center">
+  <img src="images/Screenshot_2025-11-10_221647.png" alt="Model fitting results table" width="750">
+</p>
 
-Usage
+---
 
-Put your data as two columns x,y (the script reads the data_str variable by default).
+## 📈 Mean Euclidean Error
 
-Run the script:
+<p align="center">
+  <img src="images/Screenshot_2025-11-10_221742.png" alt="Mean Euclidean distance result" width="600">
+</p>
 
-python fit_parametric_curve.py
+---
 
+## 🧾 Fitted Equation (Degrees)
 
-Output:
+<p align="center">
+  <img src="images/Screenshot_2025-11-10_221341.png" alt="Equation in degrees" width="750">
+</p>
 
-Console summary of fitted parameters and error metrics.
+---
 
-fit_summary.csv saved in the working directory.
+## 🧠 Method Summary
 
-A scatter + fitted-curve plot (if matplotlib available).
+1. **Data projection**:  
+   Observed `(x, y)` points are projected to local coordinates `(t, s)` defined by an axis with angle `θ` and offset `X`.
 
-Main algorithm (brief)
+2. **Inner fit (M)**:  
+   For each `(θ, X)`, the exponential coefficient `M` is optimized by minimizing mean squared error between observed and modeled `s(t)`.
 
-Compute PCA-based initial guess for θ and estimate X so that the mean projected t is near a target.
+3. **Outer optimization**:  
+   Global minimization of `(θ, X)` using `scipy.optimize.minimize` (`L-BFGS-B`) or fallback grid search.
 
-For candidate (θ,X):
+4. **Result evaluation**:  
+   - `mean_L1` and `mean_L2` errors computed  
+   - LaTeX curve expression printed  
+   - Fitted curve visualized using `matplotlib`
 
-Project each (x,y) to t (along-track) and s (perp).
+---
 
-If all t lie in the allowed interval (6..60), fit M by minimizing MSE between s and s_model(t).
+## 📦 Dependencies
 
-Outer optimizer picks (θ,X) minimizing the inner MSE.
-
-Construct predicted (x,y) from fitted (θ,X,M) and compute error metrics & plots.
-
-Dependencies
-
-Required: numpy, pandas
-
-Optional but recommended: scipy (for efficient optimization), matplotlib (for plotting)
-
-Suggested install
-
+```bash
 pip install numpy pandas
+# optional (recommended)
+pip install scipy matplotlib
+
