@@ -28,7 +28,7 @@ where:
 ## 🧮 Fitted Equation (Radians)
 
 <p align="center">
-  <img src="images/Screenshot_2025-11-10_221323.png" alt="Equation in radians" width="750">
+  <img src="Screenshot_2025-11-10_221323.png" alt="Equation in radians" width="750">
 </p>
 
 ---
@@ -36,7 +36,7 @@ where:
 ## 📊 Model Fitting Results
 
 <p align="center">
-  <img src="images/Screenshot_2025-11-10_221647.png" alt="Model fitting results table" width="750">
+  <img src="Screenshot_2025-11-10_221647.png" alt="Model fitting results table" width="750">
 </p>
 
 ---
@@ -44,7 +44,7 @@ where:
 ## 📈 Mean Euclidean Error
 
 <p align="center">
-  <img src="images/Screenshot_2025-11-10_221742.png" alt="Mean Euclidean distance result" width="600">
+  <img src="Screenshot_2025-11-10_221742.png" alt="Mean Euclidean distance result" width="600">
 </p>
 
 ---
@@ -52,7 +52,7 @@ where:
 ## 🧾 Fitted Equation (Degrees)
 
 <p align="center">
-  <img src="images/Screenshot_2025-11-10_221341.png" alt="Equation in degrees" width="750">
+  <img src="Screenshot_2025-11-10_221341.png" alt="Equation in degrees" width="750">
 </p>
 
 ---
